@@ -1,3 +1,5 @@
+## trying to add the options
+
 #setwd("C:/Users/Sars/Desktop/Winter break app/Tab layout changed, and adding plotly/")
 library(shiny)
 

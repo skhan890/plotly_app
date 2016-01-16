@@ -1,6 +1,9 @@
 ##
 # Something to try is: give an option of which defect thye'd like to see, and then when the click it
 # then they can see the plot.
+
+
+## trying to add the options
 library(shinythemes)
 library(shiny)
 library(rsatscan)
