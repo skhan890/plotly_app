@@ -57,8 +57,18 @@ shinyUI(navbarPage("NBDPN: Time Monitoring",
                                      
                                      ####START BUTTON####
                                      actionButton("goButton", "Start Analysis!")
-                              ),
-                              column(4, offset=1,
+                              )
+                              #,
+                              
+                            
+                              
+                              
+                              
+                              ) ) ,
+                   ### SATSCAN OUTPUT #### 
+                   tabPanel("Time Clusters",
+                            fluidPage(
+                              column(4, offset=6,
                                      uiOutput("Choices")
                                      # h4("Defect(s) Selection"),
                                      # # tableOutput("defect_table"),
@@ -69,16 +79,9 @@ shinyUI(navbarPage("NBDPN: Time Monitoring",
                                      # bsTooltip("in6", "Pick one or more defects.",
                                      #           "right", options = list(container = "body"))
                                      
-                              )
-                            
-                              
-                              
-                              
-                              ) ) ,
-                   ### SATSCAN OUTPUT #### 
-                   tabPanel("Time Clusters",
-                            fluidPage(
+                              ),
                               plotlyOutput("plots")
+                             
                               
                             ))))
 #,

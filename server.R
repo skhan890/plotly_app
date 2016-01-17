@@ -418,7 +418,8 @@ shinyServer(function(input, output,session) {
           )
 
           p <-layout(list(font=list(family="arial")), legend = l,  plot_bgcolor="#E2E2E2")
-          p
+          p 
+          
 
     })
 
