@@ -409,7 +409,7 @@ shinyServer(function(input, output,session) {
             yaxis=list(
                     title = "Number of Cases",
                     titlefont=f),
-             titlefont=(list(family="Arial")),
+             titlefont=(list(family="Arial", size=16)),
             # autosize=T,
              plot_bgcolor="#E2E2E2"
             #, 
@@ -482,7 +482,14 @@ shinyServer(function(input, output,session) {
       
       h6(HTML(paste(str1, str2, str3, str4, str5, str6, str7, str8, sep = '<br/>')))
       
-    })       
+    })
+    
+    
+    observeEvent(input$goButton, {
+      updateNavbarPage(session, "mainNavbarPage", selected="taboutput")
+    })
+    
+    
 }) 
 
 

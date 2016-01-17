@@ -1,24 +1,9 @@
-shinyUI(navbarPage("NBDPN: Time Monitoring",
+shinyUI(
+  
+  navbarPage(title="NBDPN: Time Monitoring", id="mainNavbarPage",
                    theme = shinytheme("readable"),
-                   #                    tabPanel("Instructions",
-                   #                             fluidPage(  
-                   
-                   #                                 column(3,
-                   #                                      h4("Welcome to the Time Monitoring page! Please aggregate your data")
-                   #                                                ),
-                   #                                      column(4,
-                   #                                      h4("File should be formatted as such:"),
-                   #                                      img(src='file_example.png', align = "left"))
-                   #                                      
-                   #                                      )),
-                   #                    tabPanel("Clusters", h3("Clusters detected from:"), uiOutput({
-                   #                      if(is.null("contents23"))
-                   #                        return(NULL)
-                   #                      "contents23"
-                   #                    })),
-                   
-                   
-                   tabPanel("File Input Page",
+
+                   tabPanel("File Input Page",value="tabinput",
                             fluidPage( 
                               column(3,
                                      
@@ -66,7 +51,7 @@ shinyUI(navbarPage("NBDPN: Time Monitoring",
                               
                               ) ) ,
                    ### SATSCAN OUTPUT #### 
-                   tabPanel("Time Clusters",
+                   tabPanel("Time Clusters",value="taboutput",
                             fluidPage(
                    fluidRow(
                      column(12, align="left",
