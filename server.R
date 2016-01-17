@@ -17,7 +17,7 @@ shinyServer(function(input, output,session) {
     codes<-unique(defects)
     
     code_list<-setNames(as.list(codes), codes)
-    selectInput('selected_defect', label=NULL, choices=code_list)
+    selectInput('selected_defect', label="Pick a defect", choices=code_list)
     # bsTooltip('selected_defect', "Pick one or more defects.",
     #           "right", options = list(container = "body"))
   
@@ -375,52 +375,51 @@ shinyServer(function(input, output,session) {
           #########END DATA CLEAN ############
 
           ######### START PLOTLY GRAPHS ########
-          # library(plotly)
 
-          ay <- list(
-            tickfont = list(color = "black"),
-            overlaying = "y",
-            side = "right"
-          )
-
-          x <- list(
-            title = ""
-          )
-          y <- list(
-            title = "Number of Cases"
-          )
-
-          p<-plot_ly(x = data_final$dates_UTC3, y = data_final$obs,
-                     name = "Observed", type="bar", color=data_final$clu_ind, marker=list(line=list(color="#E2E2E2")),
-                     colors = c("dodgerblue3","maroon")) %>%
-            add_trace(x = data_final$dates_UTC3, y = data_final$obs_exp,
-                      name = "Observed / Expected Ratio", yaxis = "y2", type="scatter",
+          p<-plot_ly(x = data_final$dates_UTC3, 
+                     y = data_final$obs,
+                     name = "Observed", 
+                     type="bar", 
+                     color=data_final$clu_ind, 
+                     marker=list(
+                         line=list(
+                            color="#E2E2E2")),
+                     colors = c("dodgerblue","maroon"), 
+                     opacity=.8)
+     
+            add_trace(x = data_final$dates_UTC3, 
+                      y = data_final$exp,
+                      name = "Expected Cases", 
+                      type="scatter",
                       marker = list(
-                        color="rgb(0, 255, 127)")) %>%
-            layout(title = "", yaxis2 = ay) %>%
-            add_trace(x = data_final$dates_UTC3, y = data_final$exp,
-                      name = "Expected Cases", type="scatter",marker = list(
-                        color="rgb(16, 32, 77)" ))%>%
-            layout(xaxis = x, yaxis = y)
-
-          # f<-list(
-          #    family = "sans-serif",
-          #    size = 12,
-          #    color = "#000"
-          #  )
-
-          l <- list(
-            # bgcolor = "#E2E2E2",
-            bordercolor = "#FFFF",
-            borderwidth = 1,
-            title="Legend",
-            x = 0, y = 1.3
-          )
-
-          p <-layout(list(font=list(family="arial")), legend = l,  plot_bgcolor="#E2E2E2")
-          p 
+                                     color="rgb(16, 32, 77)"))
+       
           
+          f <- list(
+            family = "Arial",
+            size = 14,
+            color = "#7f7f7f"
+          )
+       
 
+          p <-layout(title=paste("Detected Clusters of",x),
+            xaxis=list(
+                    title=" ", titlefont=f,
+                    tick0=min(data_final$dates_UTC3)), 
+            yaxis=list(
+                    title = "Number of Cases",
+                    titlefont=f),
+             titlefont=(list(family="Arial")),
+            # autosize=T,
+             plot_bgcolor="#E2E2E2"
+            #, 
+            ,
+             width=1000, height=500
+            # ,legend=list(font=list(size=4))
+            )
+          p 
+        
+      
     })
 
 
