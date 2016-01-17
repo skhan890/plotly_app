@@ -14,8 +14,12 @@ shinyServer(function(input, output,session) {
       return(NULL)
     
     load("www/defects")
+    codes<-unique(defects)
     
-    selectInput('selected_defect', label=NULL, choices=list(defects))
+    code_list<-setNames(as.list(codes), codes)
+    selectInput('selected_defect', label=NULL, choices=code_list)
+    # bsTooltip("selected_defect", "Pick one or more defects.",
+    #           "right", options = list(container = "body"))
   
   })
   # 
@@ -285,26 +289,23 @@ shinyServer(function(input, output,session) {
       
 
 
-    output$plots <- renderUI({
+    output$plots <- renderPlotly({
       
       if (is.null(Defects()))
         return(NULL)
 
       # df<-plots()
       #  plotname<-df$plotname
+# 
+#       load("www/defects")
+# 
+#       codes<-unique(defects)
+# 
+#       code_list<-setNames(as.list(codes), codes)
+# 
 
-      load("www/defects")
+x<-input$selected_defect
 
-      codes<-unique(defects)
-
-      code_list<-setNames(as.list(codes), codes)
-
-
-      lapply(code_list,function(x) {
-
-        output[[paste0("plot", x)]] <- renderPlotly({
-
-           x=code_list[i]
           src_name=paste0("www/Parameter_",x,".temporal.html")
           writeLines(iconv(readLines(src_name), from = "ISO-8859-15", to = "UTF8"), paste0("www/",x,"ex2.html"))
          src_new<-paste0("www/",x,"ex2.html")
@@ -426,9 +427,6 @@ shinyServer(function(input, output,session) {
 
           p <-layout(list(font=list(family="arial")), legend = l,  plot_bgcolor="#E2E2E2")
           p
-        })
-        plotlyOutput(paste0("plot", x))
-      })
 
     })
 
