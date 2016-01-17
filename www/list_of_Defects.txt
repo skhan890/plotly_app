@@ -1,0 +1,48 @@
+DEFECT
+Anencephalus 
+Spina bifida without anencephalus 
+Encephalocele 
+Holoprosencephaly 
+Anophthalmia / microphthalmia 
+Congenital cataract 
+Anotia/microtia 
+Aortic valve stenosis 
+Atrial septal defect 
+Atrioventricular septal defect (Endocardial cushion defect) 
+Coarctation of the aorta2 
+Common truncus (truncus arteriosus or TA)
+Double outlet right ventricle (DORV)
+Ebstein anomaly2 
+Hypoplastic left heart syndrome1 
+Interrupted aortic arch (IAA)
+Pulmonary valve atresia and stenosis
+Single Ventricle2 
+Tetralogy of Fallot (TOF) 
+Total anomalous pulmonary venous connection (TAPVC)
+Transposition of the great arteries (TGA)
+Tricuspid valve atresia and stenosis
+Ventricular septal defect 
+Choanal atresia 
+Cleft lip with cleft palate 
+Cleft lip alone (without cleft palate) 
+Cleft palate alone (without cleft lip) 
+Biliary atresia 
+Esophageal atresia/tracheoesophageal fistula 
+Rectal and large intestinal atresia/stenosis 
+Small intestinal atresia/stenosis 
+Bladder exstrophy 
+Cloacal exstrophy 
+Congenital Posterior Urethral Valves 
+Hypospadias 
+Renal agenesis/hypoplasia 
+Clubfoot 
+Craniosynostosis 
+Diaphragmatic hernia 
+Gastroschisis 
+Limb deficiencies (reduction defects) 
+Omphalocele 
+Deletion 22 q11 
+Trisomy 13 
+Trisomy 18 
+Trisomy 21 (Down syndrome) 
+Turner syndrome 

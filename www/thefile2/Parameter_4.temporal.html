@@ -1,0 +1,129 @@
+ <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd"> 
+ <html lang="en"> 
+     <head> 
+         <title>Cluster Temporal Graph</title> 
+         <meta http-equiv="content-type" content="text/html; charset=utf-8"> 
+         <style type="text/css"> 
+         body{font:100% Arial,Helvetica;background:#9ea090} 
+         .chart-options{display:none} 
+         .show-chart-options,.hide-chart-options{color:#13369f;border:1px solid #d7e9ed;margin-top:3px;-webkit-border-radius:3px;-moz-border-radius:3px} 
+         .show-chart-options a,.hide-chart-options a{color:#13369f;background-color:#f5f8fa;font-size:11px;text-decoration:none;padding:4px 6px;display:block} 
+         .show-chart-options a{padding-left:24px;background-image:url('http://www.satscan.org/images/down_grip.png');background-position:5px 4px;background-repeat:no-repeat;color:#13369f} 
+         .hide-chart-options a{padding-left:24px;background-image:url('http://www.satscan.org/images/up_grip.png');background-position:5px 4px;background-repeat:no-repeat;color:#13369f} 
+         .show-chart-options a:hover{background-color:#d9e6ec;color:#13369f;text-decoration:underline;background-image:url('http://www.satscan.org/images/down_grip_selected.png')} 
+         .hide-chart-options a{border-top:1px solid #d7e9ed;background-image:url('http://www.satscan.org/images/up_grip.png')} 
+         .hide-chart-options a:hover{background-color:#d9e6ec;color:#13369f;text-decoration:underline;background-image:url('http://www.satscan.org/images/up_grip_selected.png')} 
+         .chart-options{padding:10px 0 10px 0;background-color:#e6eef2;border:1px solid silver} 
+         .options-row{margin:0 10px 10px 10px} 
+         .options-row>label:first-child, .options-row detail{color:#13369f;font-weight:bold} 
+         .options-row input[type='radio']{margin:5px} 
+         .options-table h4{text-align:center;color:#13369f;font-weight:bold;margin:0} 
+         .options-table th{vertical-align:top;text-align:right;color:#13369f} 
+         .help-block{font-size:11px;color:#666;font-style:oblique;margin:0} 
+         </style> 
+         <script type='text/javascript' src='http://www.satscan.org/javascript/jquery/jquery-1.9.0/jquery-1.9.0.js'></script> 
+         <script type='text/javascript' src='http://www.satscan.org/javascript/highcharts/highcharts-4.0.4/js/highcharts.js'></script> 
+         <script type='text/javascript' src='http://www.satscan.org/javascript/highcharts/highcharts-4.0.4/js/modules/exporting.js'></script> 
+         <script type='text/javascript'> 
+             var charts = {}; 
+             $(document).ready(function () { 
+                 
+                 var chart_1_1 = new Highcharts.Chart({ 
+                     chart: { renderTo: 'chart_1_1', zoomType:'x', resetZoomButton: {relativeTo: 'chart', position: {x: -80, y: 10}, theme: {fill: 'white',stroke: 'silver',r: 0,states: {hover: {fill: '#41739D', style: { color: 'white' } } } } }, marginBottom: 90, borderColor: '#888888', plotBackgroundColor: '#e6e7e3', borderRadius: 0, borderWidth: 1, marginRight: 80 }, 
+                     title: { text: 'Detected Cluster', align: 'center' }, 
+                     exporting: {filename: 'cluster_graph'}, 
+                     plotOptions: { column: { grouping: false }}, 
+                     tooltip: { crosshairs: true, shared: true, formatter: function(){var is_cluster = false;var has_observed = false;$.each(this.points, function(i, point) {if (point.series.options.id == 'cluster') {is_cluster = true;}if (point.series.options.id == 'obs') {has_observed = true;}});var s = '<b>'+ this.x +'</b>'; if (is_cluster) {s+= '<br/><b>Cluster Point</b>';}$.each(this.points,function(i, point){if (point.series.options.id == 'cluster'){if (!has_observed) {s += '<br/>Observed: '+ point.y;}} else {s += '<br/>'+ point.series.name +': '+ point.y;}});return s;}, }, 
+                     legend: { backgroundColor: '#F5F5F5', verticalAlign: 'top', y: 40 }, 
+                     xAxis: [{ categories: ['2006','2007','2008','2009'], tickmarkPlacement: 'on', labels: { step: 1, rotation: -45, align: 'right' } }], 
+                     yAxis: [{ title: { enabled: true, text: 'Number of Cases', style: { fontWeight: 'normal' } }, min: 0 }, { title: { enabled: true, text: 'Observed / Expected', style: { fontWeight: 'normal' } }, min: 0, opposite: true }], 
+                     navigation: { buttonOptions: { align: 'right' } }, 
+                     series: [{ id: 'cluster', zIndex: 2, type: 'column', name: 'Cluster', color: '#AA4643', yAxis: 0, marker: { enabled: true, symbol: 'circle', radius: 0 }, data: [null,132,null,null] },{ id: 'obs', zIndex: 1, type: 'column', name: 'Observed', color: '#4572A7', yAxis: 0, marker: { enabled: true, symbol: 'square', radius: 0 }, data: [10,132,18,2] },{ id: 'exp', zIndex: 3, type: 'line', name: 'Expected', color: '#89A54E', yAxis: 0, marker: { enabled: true, symbol: 'triangle', radius: 0 }, data: [55.42,31.67,34.15,40.77] },{ id: 'obs_exp', zIndex: 2, type: 'line', name: 'Observed / Expected', color: '#00FF00', yAxis: 1, marker: { enabled: true, symbol: 'triangle', radius: 0 }, data: [0.18,4.17,0.53,0.049] }]
+                 }); 
+                 charts['chart_1_1'] = chart_1_1;
+   
+
+                 $('.chart-section').each(function() { $(this).find('.title-setter').val(charts[$(this).find('.highchart-container').first().attr('id')].title.textStr); }); 
+                 $('.title-setter').keyup(function(){ charts[$(this).parents('.chart-section').find('.highchart-container').first().attr('id')].setTitle({text: $( this ).val()}); }); 
+                 $('.show-chart-options a').click(function(event) { event.preventDefault(); $(this).parents('.options').find('.chart-options').show().end().find('.show-chart-options').hide(); }); 
+                 $('.hide-chart-options a').click(function(event) { event.preventDefault(); $(this).parents('.options').find('.chart-options').hide().end().find('.show-chart-options').show(); }); 
+                 $('.options-row input[type="radio"]').click(function(event) { 
+                     var series_type = $(this).attr('series-type'); 
+                     var chart = charts[$(this).parents('.chart-section').find('.highchart-container').first().attr('id')]; 
+                     $.each($(this).attr('series-id').split(','), function(index, value) { chart.get(value).update({type:series_type}, true); }); 
+                 }); 
+                 $('.options-row input[type="checkbox"]').click(function(event) { 
+                     var chart = charts[$(this).parents('.chart-section').find('.highchart-container').first().attr('id')]; 
+                     if ($(this).is(':checked')) { 
+                         chart.xAxis[0].addPlotBand({color: '#FFB3B3', from: $(this).attr('start-idx'), to: $(this).attr('end-idx'), id: 'band', zindex:0}); 
+                         chart.xAxis[0].addPlotLine({id:'start',color: '#FF0000', width: 1, value: $(this).attr('start-idx'), zIndex: 5 }); 
+                         chart.xAxis[0].addPlotLine({id:'end',color: '#FF0000', width: 1, value: $(this).attr('end-idx'), zIndex: 5 }); 
+                     } else { 
+                         chart.xAxis[0].removePlotBand('band' ); 
+                         chart.xAxis[0].removePlotLine('start'); 
+                         chart.xAxis[0].removePlotLine('end'); 
+                     } 
+                 }); 
+             }); 
+         </script> 
+     </head> 
+     <body> 
+         <!--[if lt IE 9]> 
+         <div id="ie" style="z-index:255;border-top:5px solid #fff;border-bottom:5px solid #fff;background-color:#c00; color:#fff;"><div class="iewrap" style="border-top:5px solid #e57373;border-bottom:5px solid #e57373;"><div class="iehead" style="margin: 14px 14px;font-size: 20px;">Notice to Internet Explorer users!</div><div class="iebody" style="font-size: 14px;line-height: 14px;margin: 14px 28px;">It appears that you are using Internet Explorer, <strong>this page may not display correctly with versions 8 or earlier of this browser</strong>.<br /><br /> 
+             <i>This page is known to display correctly with the following browsers: Safari 4+, Firefox 3+, Opera 10+ and Google Chrome 5+.</i> 
+         </div></div></div> 
+         <![endif]-->         
+         <body style="margin:0;background-color: #fff;"> 
+         <table width="100%" border="0" cellpadding="0" cellspacing="0" bgcolor="#F8FAFA" style="border-bottom: 3px double navy;"> 
+         <tbody><tr> 
+         <td width="120" align="center" bgcolor="#DBD7DB"><img src="http://www.satscan.org/images/swe2.jpg" alt="&Ouml;stersund map" title="Östersund map" width="120" height="115" hspace="1" border="0"></td> 
+         <td align="right" bgcolor="#D4DCE5"><img src="http://www.satscan.org/images/satscan_title2.jpg" alt="SaTScan&#0153; - Software for the spatial, temporal, and space-time scan statistics" title="SaTScan&#0153; - Software for the spatial, temporal, and space-time scan statistics" width="470" height="115"></td> 
+         <td width="25%" bgcolor="#F8FAFA" align="right"><img src="http://www.satscan.org/images/nyc2.jpg" alt="New York City map" title="New York City map" width="112" height="115" hspace="1" border="0" align="middle"></td> 
+         </tr></tbody></table> 
+                  <div style="margin:20px;" class="chart-section"> 
+             <div id="chart_1_1" class="highchart-container" style="margin-top:0px;"></div> 
+             <div class="options"> 
+                 <div class="show-chart-options"><a href="#">Show Chart Options</a></div> 
+                 <div class="chart-options"> 
+                     <div class="options-table"> 
+                       <h4>Chart Options</h4> 
+                       <div class="options-row"> 
+                           <label for="title_obs">Title</label> 
+                           <div><input type="text" style="width:95%;" class="title-setter" id="title_obs"> 
+                               <p class="help-block">The graph title can be updated simply by editing this text.</p> 
+                           </div> 
+                       </div> 
+                       <div class="options-row"> 
+                           <label>Observed Chart Type</label> 
+                           <div> 
+                             <label> 
+                               <input type="radio" name="chart_1_1_obs_series_type" series-type="column" series-id="obs,cluster" checked=checked/>Histogram 
+                             </label> 
+                             <label> 
+                               <input type="radio" name="chart_1_1_obs_series_type" series-type="line" series-id="obs,cluster"/>Line 
+                             </label> 
+                             <p class="help-block">Switch the series type between line and histogram.</p> 
+                           </div> 
+                       </div> 
+                       <div class="options-row"> 
+                           <label>Cluster Band</label> 
+                           <div> 
+                             <label> 
+                               <input type="checkbox" name="chart_1_1_cluster_band" start-idx="1" end-idx="1"/>Show Cluster Band 
+                             </label> 
+                             <p class="help-block">Band stretching across the plot area marking cluster interval.</p> 
+                           </div> 
+                       </div> 
+                       <div class="options-row">To zoom a portion of the chart, select and drag mouse within the chart.</div> 
+                     </div> 
+                     <div class="hide-chart-options"><a href="#">Close Chart Options</a></div> 
+                 </div> 
+             </div> 
+          </div> 
+
+
+ 
+     </body> 
+ </html> 
+
+
