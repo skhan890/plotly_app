@@ -18,7 +18,7 @@ shinyServer(function(input, output,session) {
     
     code_list<-setNames(as.list(codes), codes)
     selectInput('selected_defect', label=NULL, choices=code_list)
-    # bsTooltip("selected_defect", "Pick one or more defects.",
+    # bsTooltip('selected_defect', "Pick one or more defects.",
     #           "right", options = list(container = "body"))
   
   })
@@ -294,17 +294,9 @@ shinyServer(function(input, output,session) {
       if (is.null(Defects()))
         return(NULL)
 
-      # df<-plots()
-      #  plotname<-df$plotname
-# 
-#       load("www/defects")
-# 
-#       codes<-unique(defects)
-# 
-#       code_list<-setNames(as.list(codes), codes)
-# 
+         x<-input$selected_defect
 
-x<-input$selected_defect
+
 
           src_name=paste0("www/Parameter_",x,".temporal.html")
           writeLines(iconv(readLines(src_name), from = "ISO-8859-15", to = "UTF8"), paste0("www/",x,"ex2.html"))

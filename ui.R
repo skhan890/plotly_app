@@ -66,7 +66,7 @@ shinyUI(navbarPage("NBDPN: Time Monitoring",
                                      #                choices = levels(defects$DEFECT), multiple = TRUE),
                                      # 
                                      # br(),
-                                     # bsTooltip("selected_defect", "Pick one or more defects.",
+                                     # bsTooltip("in6", "Pick one or more defects.",
                                      #           "right", options = list(container = "body"))
                                      
                               )
@@ -78,7 +78,7 @@ shinyUI(navbarPage("NBDPN: Time Monitoring",
                    ### SATSCAN OUTPUT #### 
                    tabPanel("Time Clusters",
                             fluidPage(
-                              uiOutput("dynamicTabs")
+                              plotlyOutput("plots")
                               
                             ))))
 #,
