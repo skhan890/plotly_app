@@ -8,6 +8,18 @@ shinyServer(function(input, output,session) {
 
   v <- reactiveValues(doPlot = FALSE)
   
+  cap <- eventReactive(input$goButton, {
+    "Select a defect:"
+    # br()
+    # hr()
+
+  })
+  
+  
+  output$caption <- renderText({
+  cap()
+  })
+  
   output$Choices <- renderUI({
     
     if (is.null(Defects()))
@@ -17,7 +29,7 @@ shinyServer(function(input, output,session) {
     codes<-unique(defects)
     
     code_list<-setNames(as.list(codes), codes)
-    selectInput('selected_defect', label="Pick a defect", choices=code_list)
+    selectInput('selected_defect', label=NULL, choices=code_list)
     # bsTooltip('selected_defect', "Pick one or more defects.",
     #           "right", options = list(container = "body"))
   
@@ -484,13 +496,14 @@ shinyServer(function(input, output,session) {
       h6(HTML(paste(str1, str2, str3, str4, str5, str6, str7, str8, sep = '<br/>')))
       
     })
-    
-    
-    observeEvent(input$goButton, {
-      updateNavbarPage(session, "mainNavbarPage", selected="taboutput")
-    })
-    
+    # 
+    # 
+    # observeEvent(input$goButton, {
+    #   updateNavbarPage(session, "mainNavbarPage", selected="taboutput")
+    # })
+    # 
     
 }) 
 
-
+### ADD 
+# <div>Icons made by <a href="http://www.flaticon.com/authors/alessio-atzeni" title="Alessio Atzeni">Alessio Atzeni</a> from <a href="http://www.flaticon.com" title="Flaticon">www.flaticon.com</a>             is licensed by <a href="http://creativecommons.org/licenses/by/3.0/" title="Creative Commons BY 3.0">CC BY 3.0</a></div>
