@@ -22,19 +22,7 @@ shinyServer(function(input, output,session) {
     #           "right", options = list(container = "body"))
   
   })
-  # 
-  ###################
-  ################# I'M RIGHT HERE
- # my idea is to create an "option" box in which they can select
- # which defect that they want to look at
- # and then they can view the graphics.
- # 
- # it will make it easier for me to then call the "for which graph"
- # 
- # that is SUPER easy. you just pick it according to w/e the fuck was picked!
- #   and yeah.
- # 
- # thats all all()
+
   
   
 ##########  ################
@@ -322,9 +310,14 @@ shinyServer(function(input, output,session) {
 
 
 
+          #cats<-lapply(dates_final, function(x) paste0(gsub("/","-",x),"-01"))
           cats<-lapply(dates_final, function(x) paste0(gsub("/","-",x),"-01"))
           cats2<-unlist(cats)
           cats3<-as.Date(cats2)
+          
+          cats4<-format(cats3, format="%Y-%m")
+          
+          
           minuteDataPlot2 <-  as.numeric(as.POSIXct(cats3))
 
           minutes<-minuteDataPlot2*1000
@@ -370,7 +363,8 @@ shinyServer(function(input, output,session) {
 
           data_final$dates_UTC2 <- date_final5
 
-          data_final$dates_UTC3 <- cats3
+           data_final$dates_UTC3 <- cats3
+          data_final$dates_UTC4 <- cats4
 
           #########END DATA CLEAN ############
 
@@ -384,7 +378,7 @@ shinyServer(function(input, output,session) {
                      marker=list(
                          line=list(
                             color="#E2E2E2")),
-                     colors = c("dodgerblue","maroon"), 
+                     colors = c("#4572A7","#AA4643"), 
                      opacity=.8)
      
             add_trace(x = data_final$dates_UTC3, 
@@ -395,27 +389,34 @@ shinyServer(function(input, output,session) {
                                      color="rgb(16, 32, 77)"))
        
           
-          f <- list(
-            family = "Arial",
-            size = 14,
-            color = "#7f7f7f"
-          )
+            a <- list(
+              title="",
+              # autotick = FALSE,
+              ticks = "outside",
+              tick0 = min(data_final$dates_UTC3)
+              ,
+              tickangle=10,
+              # dtick = 0.25,
+              # ticklen = 5,
+              # tickwidth = 2,
+              tickcolor = toRGB("blue")
+            )
        
 
           p <-layout(title=paste("Detected Clusters of",x),
-            xaxis=list(
-                    title=" ", titlefont=f,
-                    tick0=min(data_final$dates_UTC3)), 
+            xaxis=a,
             yaxis=list(
-                    title = "Number of Cases",
-                    titlefont=f),
-             titlefont=(list(family="Arial", size=16)),
+                    title = "Number of Cases"
+                    ),
+             titlefont=(list(
+               # family="Arial", 
+               size=16)),
             # autosize=T,
-             plot_bgcolor="#E2E2E2"
+             # plot_bgcolor="#E2E2E2"
             #, 
-            ,
-             width=1000, height=500
-            # ,legend=list(font=list(size=4))
+            #,
+             width=800, height=500
+            ,legend=(list(bgcolor="#E2E2E2"))
             )
           p 
         
