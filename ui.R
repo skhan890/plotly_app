@@ -10,9 +10,29 @@ shinyUI(
                       fluidPage( 
                         sidebarLayout(position="right",
                           sidebarPanel(width=10,
-                                       navbarPage(title="cats",
-                                                  tabPanel("YeeEs","im a home cat"),
-                                                  tabPanel("YeeEs2","im a home cat2"))), 
+                                       navbarPage(title="Time Monitoring",
+                                                  tabPanel("YeeEs",
+                                                           
+                                                           "im a home cat"),
+                                                  tabPanel("Licenses",
+                                                           
+                                                  tags$ul(
+                                                    tags$li("RStudio Team (2016). RStudio: Integrated Development for R. RStudio, Inc., Boston, MA URL",(tags$a(href="http://www.rstudio.com/.", "http://www.rstudio.com/."))), 
+                                                    tags$li("SaTScan: Kuldorff M and Information Management Services I. SaTScanTM v6.0: Software for the spatial and space-time scan statistics. 2005.",(tags$a(href="www.satscan.org", "www.satscan.org"))), 
+                                                  tags$li("Icons made by", (tags$a(href="http://www.flaticon.com/authors/alessio-atzeni", "Alessio Atzeni")),"from",(tags$a(href="http://www.flaticon.com", "www.flaticon.com")),"is licensed by",tags$a(href="http://creativecommons.org/licenses/by/3.0/","Creative Commons BY 3.0")),
+                                                   
+                                                    tags$li("Various R Packages:", tags$ul(
+                                                            strong(tags$li('rsatscan')),
+                                                            tags$li('shinythemes'),
+                                                            tags$li('XML')))
+                                                            
+                                                    
+                                                      
+                                                      
+                                                    )
+                                                            
+                                                  )
+                                                  )), 
                       mainPanel(width=2,h5("NBDPN: Time Monitoring")
                       )
                       )))
@@ -95,8 +115,8 @@ shinyUI(
                                      # bsTooltip("in6", "Pick one or more defects.",
                                      #           "right", options = list(container = "body"))
                   # , fluidRow(column(12,  align="center",
-                              plotlyOutput("plots")
-                             
+                              # plotlyOutput("plots")
+                  htmlOutput("inc")
                    ) 
                             )))))
 #,

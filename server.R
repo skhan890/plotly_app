@@ -8,6 +8,13 @@ shinyServer(function(input, output,session) {
 
   v <- reactiveValues(doPlot = FALSE)
   
+
+   
+  
+  
+  
+  
+  
   cap <- eventReactive(input$goButton, {
     "Select a defect:"
     # br()
@@ -30,6 +37,7 @@ shinyServer(function(input, output,session) {
     
     code_list<-setNames(as.list(codes), codes)
     selectInput('selected_defect', label=NULL, choices=code_list)
+    
     # bsTooltip('selected_defect', "Pick one or more defects.",
     #           "right", options = list(container = "body"))
   
@@ -289,151 +297,151 @@ shinyServer(function(input, output,session) {
       
 
 
-    output$plots <- renderPlotly({
-      
-      if (is.null(Defects()))
-        return(NULL)
-
-         x<-input$selected_defect
-
-
-
-          src_name=paste0("www/Parameter_",x,".temporal.html")
-          writeLines(iconv(readLines(src_name), from = "ISO-8859-15", to = "UTF8"), paste0("www/",x,"ex2.html"))
-         src_new<-paste0("www/",x,"ex2.html")
-
-
-          ##############START DATA CLEAN##########
-
-          doc.html=htmlParse(src_new)
-
-
-          newdoc<-capture.output(doc.html)
-
-          dates<-newdoc[35]
-
-          graph_data<-newdoc[38]
-
-
-          dates2<-ex_between(dates, "categories: [", "]")
-          dates2<-gsub("'","",dates2)
-
-          dates_final<-strsplit(dates2, ",")
-
-
-
-          #cats<-lapply(dates_final, function(x) paste0(gsub("/","-",x),"-01"))
-          cats<-lapply(dates_final, function(x) paste0(gsub("/","-",x),"-01"))
-          cats2<-unlist(cats)
-          cats3<-as.Date(cats2)
-          
-          cats4<-format(cats3, format="%Y-%m")
-          
-          
-          minuteDataPlot2 <-  as.numeric(as.POSIXct(cats3))
-
-          minutes<-minuteDataPlot2*1000
-
-          date_final5<-minutes
-
-          nseries2<-gsub("series: ","",graph_data)
-          nseries2<-gsub("]\r","",nseries2)
-
-          nser<-sub(".*'column',:]", "", strsplit(nseries2, "id:")[[1]])
-          nser<-nser[-1]
-          id<-ex_between(nser, "'" , "', z")
-          data<- ex_between(nser, "data: [", "]")
-          names(data)<-unlist(id)
-
-          tmp <- sapply(data, as.character)
-
-          #  unique(as.numeric(unlist(strsplit(gsub("[^0-9]", "", unlist(ll)), ""))))
-
-          s <- strsplit(as.character(data), ',')
-          names(s)<-unlist(id)
-
-          output <- matrix(unlist(s), ncol = 4, byrow = TRUE)
-
-          u<-t(output)
-          colnames(u)  <- (unlist(id))
-
-          data_final<-u
-          data_final<-as.data.frame(data_final)
-
-          data_final$clu_ind <- ifelse(data_final$cluster == "null","Observed", "Cluster")
-
-
-
-          data_final$dates <- unlist(t(dates_final))
-
-
-          data_final <- transform(data_final, obs_exp = as.numeric(levels(data_final$obs_exp))[data_final$obs_exp],
-                                  obs = as.numeric(levels(data_final$obs))[data_final$obs],
-                                  exp = as.numeric(levels(data_final$exp))[data_final$exp]
-          )
-
-
-          data_final$dates_UTC2 <- date_final5
-
-           data_final$dates_UTC3 <- cats3
-          data_final$dates_UTC4 <- cats4
-
-          #########END DATA CLEAN ############
-
-          ######### START PLOTLY GRAPHS ########
-
-          p<-plot_ly(x = data_final$dates_UTC3, 
-                     y = data_final$obs,
-                     name = "Observed", 
-                     type="bar", 
-                     color=data_final$clu_ind, 
-                     marker=list(
-                         line=list(
-                            color="#E2E2E2")),
-                     colors = c("#4572A7","#AA4643"), 
-                     opacity=.8)
-     
-            add_trace(x = data_final$dates_UTC3, 
-                      y = data_final$exp,
-                      name = "Expected Cases", 
-                      type="scatter",
-                      marker = list(
-                                     color="rgb(16, 32, 77)"))
-       
-          
-            a <- list(
-              title="",
-              # autotick = FALSE,
-              ticks = "outside",
-              tick0 = min(data_final$dates_UTC3)
-              ,
-              tickangle=10,
-              # dtick = 0.25,
-              # ticklen = 5,
-              # tickwidth = 2,
-              tickcolor = toRGB("blue")
-            )
-       
-
-          p <-layout(title=paste("Detected Clusters of",x),
-            xaxis=a,
-            yaxis=list(
-                    title = "Number of Cases"
-                    ),
-             titlefont=(list(
-               # family="Arial", 
-               size=16)),
-            # autosize=T,
-             # plot_bgcolor="#E2E2E2"
-            #, 
-            #,
-             width=800, height=500
-            ,legend=(list(bgcolor="#E2E2E2"))
-            )
-          p 
-        
-      
-    })
+    # output$plots <- renderPlotly({
+    #   
+    #   if (is.null(Defects()))
+    #     return(NULL)
+    # 
+    #      x<-input$selected_defect
+    # 
+    # 
+    # 
+    #       src_name=paste0("www/Parameter_",x,".temporal.html")
+    #       writeLines(iconv(readLines(src_name), from = "ISO-8859-15", to = "UTF8"), paste0("www/",x,"ex2.html"))
+    #      src_new<-paste0("www/",x,"ex2.html")
+    # 
+    # 
+    #       ##############START DATA CLEAN##########
+    # 
+    #       doc.html=htmlParse(src_new)
+    # 
+    # 
+    #       newdoc<-capture.output(doc.html)
+    # 
+    #       dates<-newdoc[35]
+    # 
+    #       graph_data<-newdoc[38]
+    # 
+    # 
+    #       dates2<-ex_between(dates, "categories: [", "]")
+    #       dates2<-gsub("'","",dates2)
+    # 
+    #       dates_final<-strsplit(dates2, ",")
+    # 
+    # 
+    # 
+    #       #cats<-lapply(dates_final, function(x) paste0(gsub("/","-",x),"-01"))
+    #       cats<-lapply(dates_final, function(x) paste0(gsub("/","-",x),"-01"))
+    #       cats2<-unlist(cats)
+    #       cats3<-as.Date(cats2)
+    #       
+    #       cats4<-format(cats3, format="%Y-%m")
+    #       
+    #       
+    #       minuteDataPlot2 <-  as.numeric(as.POSIXct(cats3))
+    # 
+    #       minutes<-minuteDataPlot2*1000
+    # 
+    #       date_final5<-minutes
+    # 
+    #       nseries2<-gsub("series: ","",graph_data)
+    #       nseries2<-gsub("]\r","",nseries2)
+    # 
+    #       nser<-sub(".*'column',:]", "", strsplit(nseries2, "id:")[[1]])
+    #       nser<-nser[-1]
+    #       id<-ex_between(nser, "'" , "', z")
+    #       data<- ex_between(nser, "data: [", "]")
+    #       names(data)<-unlist(id)
+    # 
+    #       tmp <- sapply(data, as.character)
+    # 
+    #       #  unique(as.numeric(unlist(strsplit(gsub("[^0-9]", "", unlist(ll)), ""))))
+    # 
+    #       s <- strsplit(as.character(data), ',')
+    #       names(s)<-unlist(id)
+    # 
+    #       output <- matrix(unlist(s), ncol = 4, byrow = TRUE)
+    # 
+    #       u<-t(output)
+    #       colnames(u)  <- (unlist(id))
+    # 
+    #       data_final<-u
+    #       data_final<-as.data.frame(data_final)
+    # 
+    #       data_final$clu_ind <- ifelse(data_final$cluster == "null","Observed", "Cluster")
+    # 
+    # 
+    # 
+    #       data_final$dates <- unlist(t(dates_final))
+    # 
+    # 
+    #       data_final <- transform(data_final, obs_exp = as.numeric(levels(data_final$obs_exp))[data_final$obs_exp],
+    #                               obs = as.numeric(levels(data_final$obs))[data_final$obs],
+    #                               exp = as.numeric(levels(data_final$exp))[data_final$exp]
+    #       )
+    # 
+    # 
+    #       data_final$dates_UTC2 <- date_final5
+    # 
+    #        data_final$dates_UTC3 <- cats3
+    #       data_final$dates_UTC4 <- cats4
+    # 
+    #       #########END DATA CLEAN ############
+    # 
+    #       ######### START PLOTLY GRAPHS ########
+    # 
+    #       p<-plot_ly(x = data_final$dates_UTC3, 
+    #                  y = data_final$obs,
+    #                  name = "Observed", 
+    #                  type="bar", 
+    #                  color=data_final$clu_ind, 
+    #                  marker=list(
+    #                      line=list(
+    #                         color="#E2E2E2")),
+    #                  colors = c("#4572A7","#AA4643"), 
+    #                  opacity=.8)
+    #  
+    #         add_trace(x = data_final$dates_UTC3, 
+    #                   y = data_final$exp,
+    #                   name = "Expected Cases", 
+    #                   type="scatter",
+    #                   marker = list(
+    #                                  color="rgb(16, 32, 77)"))
+    #    
+    #       
+    #         a <- list(
+    #           title="",
+    #           # autotick = FALSE,
+    #           ticks = "outside",
+    #           tick0 = min(data_final$dates_UTC3)
+    #           ,
+    #           tickangle=10,
+    #           # dtick = 0.25,
+    #           # ticklen = 5,
+    #           # tickwidth = 2,
+    #           tickcolor = toRGB("blue")
+    #         )
+    #    
+    # 
+    #       p <-layout(title=paste("Detected Clusters of",x),
+    #         xaxis=a,
+    #         yaxis=list(
+    #                 title = "Number of Cases"
+    #                 ),
+    #          titlefont=(list(
+    #            # family="Arial", 
+    #            size=16)),
+    #         # autosize=T,
+    #          # plot_bgcolor="#E2E2E2"
+    #         #, 
+    #         #,
+    #          width=800, height=500
+    #         ,legend=(list(bgcolor="#E2E2E2"))
+    #         )
+    #       p 
+    #     
+    #   
+    # })
 
 
       
@@ -441,40 +449,62 @@ shinyServer(function(input, output,session) {
       
       
     
-    output$dynamicTabs <- renderUI({
-      if (is.null(Defects()))
-        return(NULL)
-      
-      # plots<-plots()
-      # df<-plots()
-    #  plotname<-df$plotname
-      
-      load("www/defects")
-      
-      codes<-unique(defects)
-      
-      code_list<-setNames(as.list(codes), codes)
-      
-      
-      
-      tabs <- lapply(code_list,function(x) {
-        
-      plotname <- paste("plot", x, sep="")   
-      
-        tabPanel(
-          title = paste0(x),
-          # tags$iframe(src =
-       uiOutput(plots[plotname])
-        )
-      })
-      do.call(tabsetPanel,c(tabs,id = 'selectedTab'))
-     
-    })
+    # output$dynamicTabs <- renderUI({
+    #   if (is.null(Defects()))
+    #     return(NULL)
+    #   
+    #   # plots<-plots()
+    #   # df<-plots()
+    # #  plotname<-df$plotname
+    #   
+    #   load("www/defects")
+    #   
+    #   codes<-unique(defects)
+    #   
+    #   code_list<-setNames(as.list(codes), codes)
+    #   
+    #   
+    #   
+    #   tabs <- lapply(code_list,function(x) {
+    #     
+    #   plotname <- paste("plot", x, sep="")   
+    #   
+    #     tabPanel(
+    #       title = paste0(x),
+    #       # tags$iframe(src =
+    #    uiOutput(plots[plotname])
+    #     )
+    #   })
+    #   do.call(tabsetPanel,c(tabs,id = 'selectedTab'))
+    #  
+    # })
 
  
     
     
     
+    
+    
+    output$inc<-renderUI({
+      
+        if (is.null(Defects()))
+          return(NULL)
+
+      x<-input$selected_defect
+           
+src_name=paste0("www/Parameter_",x,".temporal.html")
+writeLines(iconv(readLines(src_name), from = "ISO-8859-15", to = "UTF8"), paste0("www/",x,"ex2.html"))
+ src_new<-paste0("www/",x,"ex2.html")
+
+      return(tags$iframe(
+                    src = paste0(x,"ex2.html"),
+                    width = '100%',
+                    height = 600
+                  ))
+      
+    })
+    
+
     
     
     
@@ -506,4 +536,4 @@ shinyServer(function(input, output,session) {
 }) 
 
 ### ADD 
-# <div>Icons made by <a href="http://www.flaticon.com/authors/alessio-atzeni" title="Alessio Atzeni">Alessio Atzeni</a> from <a href="http://www.flaticon.com" title="Flaticon">www.flaticon.com</a>             is licensed by <a href="http://creativecommons.org/licenses/by/3.0/" title="Creative Commons BY 3.0">CC BY 3.0</a></div>
+#
