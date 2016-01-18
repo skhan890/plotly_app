@@ -2,20 +2,53 @@ shinyUI(
   
   navbarPage(
     
-    title=NULL,
-    # title="NBDPN: Time Monitoring", 
+    # title=NULL,
+    title="NBDPN: Time Monitoring",
     id="mainNavbarPage",
                    theme = shinytheme("readable"),
-             tabPanel("Welcome",value="tabinput3",
+             tabPanel("Welcome", value="tabinput3",
                       fluidPage( 
-                        sidebarLayout(position="right",
-                          sidebarPanel(width=10,
-                                       navbarPage(title="Time Monitoring",
-                                                  tabPanel("YeeEs",
+                       
+                        # sidebarLayout(position="right",
+                        #   sidebarPanel(width=10,
+                        tabsetPanel(title="Time Monitoring",
+                                                  tabPanel("How to Use",
+                                                           fluidPage(
+                                                             column(3,
+                                                           wellPanel(h4("Step 1"),
+                                                                     p("Gather data like so:"),
+                                                                   "cute cat here"
+                                                                     )),
                                                            
-                                                           "im a home cat"),
-                                                  tabPanel("Licenses",
+                                                           column(3, 
+                                                           wellPanel(h4("Step 2"),
+                                                                     "Data needs to be in the same
+                                                                     time frame",
+                                                                     "insert a pic where you
+                                                                     outline the years in that old one"
+                                                                     )),
                                                            
+                                                           column(3,
+                                                                  wellPanel(
+                                                                   h4( "Step 3.
+                                                                    Go to File Input
+                                                                    to start the process!",
+                                                                       actionButton("file-go", "Start Analysis!")
+                                                                       
+                                                                  )
+                                                                  ))
+                                                                  ))
+                                                           ,
+                               
+                                    tabPanel("Having Trouble?",
+                                             h3("FAQ"),
+                                             
+                                             strong(p("This is question 1")),
+                                             p("this is the cute answer", style = "color:dodgerblue")
+                                             
+                                    ),
+                                                  tabPanel("About",
+                                                       h5("Licenses"),    
                                                   tags$ul(
                                                     tags$li("RStudio Team (2016). RStudio: Integrated Development for R. RStudio, Inc., Boston, MA URL",(tags$a(href="http://www.rstudio.com/.", "http://www.rstudio.com/."))), 
                                                     tags$li("SaTScan: Kuldorff M and Information Management Services I. SaTScanTM v6.0: Software for the spatial and space-time scan statistics. 2005.",(tags$a(href="www.satscan.org", "www.satscan.org"))), 
@@ -29,15 +62,17 @@ shinyUI(
                                                     
                                                       
                                                       
-                                                    )
+                                                    
                                                             
                                                   )
-                                                  )), 
-                      mainPanel(width=2,h5("NBDPN: Time Monitoring")
-                      )
-                      )))
+                                                  )))
+                      #, 
+                      # mainPanel(width=2,h5("NBDPN: Time Monitoring")
+                      # )
+                      # )
+  )
                       ,
-                   tabPanel("File Input Page",value="tabinput",
+                   tabPanel("File Input Page",value="taboutput",
                             fluidPage( 
 
                              sidebarLayout(
@@ -83,7 +118,7 @@ shinyUI(
                                      img(src='Icons/six.png', align="center"),br(),br(),actionButton("goButton", "Start Analysis!")
                               ),
                               wellPanel(     
-                                h4(p("About"), align="right", style = "color:dodgerblue"),
+                                # h4(p("About"), align="right", style = "color:dodgerblue"),
                                 # h5(("Today's Date")),
                                 dateInput("Today",
                                           label = "Today's Date", value=NULL),

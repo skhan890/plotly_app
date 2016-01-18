@@ -103,6 +103,7 @@ shinyServer(function(input, output,session) {
     # FILE CREATE
     
     observeEvent(input$goButton, {
+      
       inFile <- input$file1
       if (is.null(inFile))
         return(NULL)
@@ -138,6 +139,7 @@ shinyServer(function(input, output,session) {
       
     })
     
+
     Defects <- eventReactive(input$goButton, {
       if (is.null("www/defects"))
         return(NULL)
@@ -146,16 +148,7 @@ shinyServer(function(input, output,session) {
       defects
       
     })
-#     
-#     Population <- eventReactive(input$goButton, {
-#       if (is.null("www/pop"))
-#         return(NULL)
-#       
-#       load("www/pop")
-#       pop 
-#       
-#     })
-#     
+
     
     Case <- eventReactive(input$goButton, {
       if (is.null("www/case"))
@@ -166,17 +159,6 @@ shinyServer(function(input, output,session) {
     })
     
     
-    
-#     output$case<-renderTable({
-#       
-#       df=Case()
-#       df
-#     })
-#     
-#     output$defect_table<-renderTable({
-#       df=Defects()
-#       df
-#     })
     
     end <- reactive({
       if (input$datetype=="Month"){
@@ -220,8 +202,7 @@ shinyServer(function(input, output,session) {
     })
 
     
-    observeEvent(input$goButton,{
-      
+ observeEvent(input$goButton,{  
       v$doPlot <- TRUE
       
       load("www/case")
@@ -526,14 +507,11 @@ writeLines(iconv(readLines(src_name), from = "ISO-8859-15", to = "UTF8"), paste0
       h6(HTML(paste(str1, str2, str3, str4, str5, str6, str7, str8, sep = '<br/>')))
       
     })
-    # 
-    # 
-    # observeEvent(input$goButton, {
-    #   updateNavbarPage(session, "mainNavbarPage", selected="taboutput")
-    # })
-    # 
-    
-}) 
 
-### ADD 
-#
+
+    observeEvent(input$file-go, {
+      updateNavbarPage(session, "mainNavbarPage", selected="taboutput")
+    })
+
+})
+
