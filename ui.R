@@ -7,36 +7,32 @@ shinyUI(
     tabPanel(
       "Welcome!",
 fluidPage(
-  splitLayout(
+  # splitLayout(
+  fluidRow(
+    column(12,
     wellPanel(h4("Welcome to the Time Monitoring page"),
               hr(),
               h5(p("Purpose of this app:",style = "color:dodgerblue")),
-              p("As part of the National Birth Defects Prevention Network, there was a need to 
-                conduct analysis of changes in birth defects over time in a regular manner"),
+              p("The National Birth Defects Prevention Network (NBDPN) identified a need in 2012 to 
+                conduct analysis of changes in the increases and decreases in birth defects over time on a regular basis.
+                This tool addresses that need by providing simplified analysis through the SaTScan (spatial scan-statistic) software."),
               hr(),
               h5(p(style = "color:dodgerblue","Methods used:")),
-              p("SaTScan (spatial scan-statistic software)"),
+              p("SaTScan "),
               tags$ul(
                 tags$li("Purely temporal"),
                 tags$li("Retrospective"),
-                tags$li("High-rates only (Observed > Expected"),
-                tags$li("Poisson distribution"))),
+                tags$li("High-rates only (Observed > Expected)"),
+                tags$li("Poisson distribution")),
+              br(),
+              br(),
+              br()
+              ),
 
-    wellPanel("This is where to go")
-    
-  )
-)
-    ),
-    
-    # title=NULL,
-    
-    tabPanel(
-      "Tutorial",
-      value = "tabinput3",
-      fluidPage(
-        column(3,
+    fluidRow(
+      column(4,
                wellPanel(
-                 h4("Step 1"),
+                 h4(p(style = "color:dodgerblue","Step 1")),
                  strong("Prepare data files"),hr(),
                  
                  
@@ -45,17 +41,16 @@ fluidPage(
                  img(src = 'Icons/graph.png', align = "center")
 
               ) ),
-        
-        column(
-          3,
+             fluidRow(
+               column(4,
           wellPanel(
-            h4("Step 2"),
+            h4(p(style = "color:dodgerblue","Step 2")),
             strong("Notes on aggregating data:"),hr(),
             p("Create a SAS (.sas7bdat), Excel (.xls, .xlsx) or tab delimited Text (.txt) of aggregate-data with the following variables:"),
             hr(),
             tags$ul(
               tags$li(strong("ID:"),"Suggested — your two-character State (e.g. FL)."), 
-              tags$li(strong("Defect_Name:"), "A string that identifies your defect. There should be no spaces.","(e.g. 'Trisomy_21' instead of 'Trisomy 21')"), 
+              tags$li(strong("Defect_Name:"), "A string that identifies your defect. There should be no spaces. ","(e.g. 'Trisomy_21' instead of 'Trisomy 21'). There is no limit to how many defects to include in the analysis."), 
               tags$li(strong("Cases:"), "Case count for that time unit.**"),
               tags$li(strong("Time:"), "Aggregate all data by year only (YYYY), or by month and year (YYYY/MM)."),
               tags$li(strong("Population:"), "The number of live births (birth defect cases + all other infants born that year) in your whole registry area for each date combination."
@@ -71,33 +66,20 @@ fluidPage(
           )
           ),
         
-        column(3,
-       
-                      wellPanel(
-                        h4("Step 3"),
+ fluidRow(
+   column(4,
+          wellPanel(
+            h4(p(style = "color:dodgerblue","Step 3")),
                         hr(),
                   p( "Once the data is aggregated, go to the File Input page to start the analysis."),
-                   actionButton("filego", "Start Analysis!")
-                   
+                  br(),  br(),  br(),  br(),  br(),  br(),
+                   actionButton("filego", "Go to File Input page!"),
+                  br(),  br(),  br(),  br(),  br(),  br(),
+                  br()
                  
-               ))
-#,
-        
-        # column(12,
-        #        fluidPage(
-        #          tabPanel(
-        #            "Having Trouble?",
-        #            h3("FAQ"),
-        #            
-        #            strong(p("This is question 1")),
-        #            p("this is the cute answer", style = "color:dodgerblue")
-        #            
-        #            
-        #          )
-        #        ))
-        )
-        )
-    ,
+              ) )))))))),
+
+    
     
     
     tabPanel("File Input Page", value = "taboutput",
@@ -209,16 +191,6 @@ fluidPage(
                    )),
                    uiOutput("Choices"),
                    
-                   # h4("Defect(s) Selection"),
-                   # # tableOutput("defect_table"),
-                   # selectizeInput('in6', label='Choose the defect(s) to be analyzed:',
-                   #                choices = levels(defects$DEFECT), multiple = TRUE),
-                   #
-                   # br(),
-                   # bsTooltip("in6", "Pick one or more defects.",
-                   #           "right", options = list(container = "body"))
-                   # , fluidRow(column(12,  align="center",
-                   # plotlyOutput("plots")
                    htmlOutput("inc"))
                )
              )),
@@ -228,7 +200,8 @@ fluidPage(
     
     tabPanel("About",
              fluidPage(
-             wellPanel(align="center",
+               column(4,
+             wellPanel(align="left",
       # "About",
       h5("Licenses"),
       tags$ul(
@@ -265,7 +238,7 @@ fluidPage(
                  span("@", style = "color:dodgerblue"),
                  span("gmail.com for any bugs or assistance.", style = "color:black"))
         )
-        
+               )
       )
     )
         )
